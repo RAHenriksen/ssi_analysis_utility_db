@@ -1,0 +1,4 @@
+# chrom	chromStart	chromEnd	name	score	strand
+AM180355.1	795842	803975	tcdA	0	+
+AM180355.1	787392	794493	tcdB	0	+
+AM180355.1	804309	805008	tcdC	0	-
