@@ -1,9 +1,11 @@
-name: Update type repeat versions
+name: Update type repeat and reference versions
 
 on:
   push:
     paths:
       - 'clostridioides_difficile/type_repeats/*.fasta'
+      - 'clostridioides_difficile/*.fasta'
+      - 'escherichia_coli/*.fasta'
   workflow_dispatch: {}
 
 permissions:
@@ -19,9 +21,13 @@ jobs:
         with:
           fetch-depth: 0  # need full history for git log
 
-      - name: Update version sidecar files
+      - name: Update type repeat version sidecar files
         run: |
           bash clostridioides_difficile/scripts/update_type_repeat_versions.sh
+
+      - name: Update reference genome version sidecar files
+        run: |
+          bash scripts/update_reference_versions.sh
 
       - name: Commit and push changes
         run: |
@@ -33,5 +39,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          git commit -am "Update type repeat version files"
+          git commit -am "Update version sidecar files"
           git push
