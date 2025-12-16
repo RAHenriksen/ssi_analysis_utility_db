@@ -1,0 +1,37 @@
+name: Update type repeat versions
+
+on:
+  push:
+    paths:
+      - 'clostridioides_difficile/type_repeats/*.fasta'
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  update-versions:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # need full history for git log
+
+      - name: Update version sidecar files
+        run: |
+          bash clostridioides_difficile/scripts/update_type_repeat_versions.sh
+
+      - name: Commit and push changes
+        run: |
+          if git diff --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git commit -am "Update type repeat version files"
+          git push
