@@ -23,7 +23,7 @@ for f in "${ref_files[@]}"; do
     commit_sha="$(git log -1 --format=%H  -- "$f")"
     commit_date="$(git log -1 --format=%cs -- "$f")"
 
-    version_str="custom_${commit_sha}"
+    version_str="${base}_custom_${commit_sha}"
 
     # Write sidecar version file next to it, e.g. escherichia_coli/ecoligenes_version.txt
     printf '%s\t%s\n' "$version_str" "$commit_date" \
